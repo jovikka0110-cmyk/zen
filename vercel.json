@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "app.py",
+      "src": "api/index.py",
       "use": "@vercel/python"
     },
     {
@@ -15,8 +15,12 @@
   ],
   "routes": [
     {
-      "src": "/(chat|api/.*)",
-      "dest": "app.py"
+      "src": "/chat",
+      "dest": "api/index.py"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "api/index.py"
     },
     {
       "src": "/assets/(.*)",
