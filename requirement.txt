@@ -1,0 +1,12 @@
+google-genai
+python-dotenv
+SpeechRecognition
+pyttsx3
+pyaudio
+python-dateutil
+langdetect
+gTTS
+edge-tts
+playsound==1.2.2
+flask
+
