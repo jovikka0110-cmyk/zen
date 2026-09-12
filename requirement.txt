@@ -9,4 +9,7 @@ gTTS
 edge-tts
 playsound==1.2.2
 flask
+gunicorn
+pymupdf
+
 
