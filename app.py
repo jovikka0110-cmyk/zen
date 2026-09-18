@@ -9,11 +9,6 @@ frontend_dist = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fronte
 
 app = Flask(__name__, static_folder=frontend_dist, static_url_path="")
 
-def on_reminder_due(reminder):
-    print(f"\n[REMINDER] {reminder['task']}")
-
-reminders.start_background_checker(on_reminder_due)
-
 @app.after_request
 def add_cors_headers(response):
     response.headers["Access-Control-Allow-Origin"] = "*"
@@ -83,6 +78,13 @@ def get_status():
         })
     except Exception as e:
         return jsonify({"status": "error", "error": str(e)}), 500
+
+
+@app.route("/reminders/check", methods=["GET"])
+@app.route("/api/reminders/check", methods=["GET"])
+def check_due_reminders_endpoint():
+    due = reminders.check_due_reminders()
+    return jsonify({"due": due})
 
 
 @app.route("/api/reminders", methods=["GET", "POST"])

@@ -190,12 +190,11 @@ def respond(command, file_data=None):
                 "What language would you like to master today? (e.g. Python, JavaScript, HTML/CSS, C++, Java, SQL)"
             )
 
-        if "remind me" in command or "remaind me" in command:
+        if any(k in cmd_lower for k in ["remind", "reminder", "alarm"]):
             import reminders
+            if any(k in cmd_lower for k in ["my reminders", "show reminders", "list reminders", "get reminders"]):
+                return reminders.get_reminders()
             return reminders.add_reminder(command)
-        elif "my reminders" in command or "show reminders" in command:
-            import reminders
-            return reminders.get_reminders()
 
         words = set(re.findall(r'\b\w+\b', cmd_lower))
 

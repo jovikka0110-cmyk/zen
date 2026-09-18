@@ -35,12 +35,40 @@ def save_reminders(data):
 
 def add_reminder(command):
     try:
-        match = re.search(r"remind me (?:to|that)?\s*(.+?)\s+at\s+(.+)", command, re.IGNORECASE)
-        if not match:
-            return "Try phrasing it like: 'remind me to <task> at <time>'"
+        cmd = command.strip()
+        cmd_lower = cmd.lower()
 
-        task = match.group(1).strip()
-        time_str = match.group(2).strip()
+        task, time_str = None, None
+
+        # Pattern 1: "... (to/that/for) <task> at <time>"
+        m1 = re.search(r"(?:remind me|set a reminder|set an alarm|set alarm|reminder|alarm)\s+(?:to|that|for)?\s*(.+?)\s+at\s+(.+)", cmd_lower)
+        if m1:
+            task = m1.group(1).strip()
+            time_str = m1.group(2).strip()
+        else:
+            # Pattern 2: "... at <time> (to/that/for) <task>"
+            m2 = re.search(r"(?:remind me|set a reminder|set an alarm|set alarm|reminder|alarm)\s+at\s+(.+?)\s+(?:to|that|for)\s+(.+)", cmd_lower)
+            if m2:
+                time_str = m2.group(1).strip()
+                task = m2.group(2).strip()
+            else:
+                # Pattern 3: "... (to/for) <task> <time>" (e.g. "remind me to call John 5pm")
+                m3 = re.search(r"(?:remind me|set a reminder|set an alarm|set alarm|reminder|alarm)\s+(?:to|that|for)?\s*(.+?)\s+(\d{1,2}(?::\d{2})?\s*(?:am|pm))", cmd_lower)
+                if m3:
+                    task = m3.group(1).strip()
+                    time_str = m3.group(2).strip()
+
+        if not task or not time_str:
+            # Fallback: extract time substring
+            time_match = re.search(r"\b(\d{1,2}(?::\d{2})?\s*(?:am|pm)?)\b", cmd_lower)
+            if time_match:
+                time_str = time_match.group(1).strip()
+                clean_cmd = re.sub(r"(?:remind me|set a reminder|set an alarm|set alarm|reminder|alarm|remind|at|to|that|for)", "", cmd_lower, flags=re.IGNORECASE)
+                clean_cmd = clean_cmd.replace(time_str, "").strip()
+                task = clean_cmd if clean_cmd else "your scheduled task"
+
+        if not task or not time_str:
+            return "Please phrase your reminder like: 'remind me to <task> at <time>' or 'set alarm to <task> at <time>'."
 
         try:
             when = date_parser.parse(time_str, fuzzy=True)

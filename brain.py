@@ -48,6 +48,8 @@ SYSTEM_INSTRUCTION = (
     "the user just wrote in — if they write in Tamil (Tamil script), reply "
     "fully in Tamil. If they write in English, reply in English. Never mix "
     "languages within a single reply unless explicitly asked to.\n\n"
+    "REMINDERS & ALARMS: You have full built-in support for reminders and alarms. "
+    "When a user asks to set a reminder or alarm, confirm that the system will alert them with browser beeps and voice notifications.\n\n"
     "STRICT ACCESS POLICY: Social media websites (such as Instagram, Facebook, Twitter, TikTok, "
     "Reddit, Snapchat, LinkedIn, Pinterest, Tumblr) are strictly DENIED and blocked. Access is "
     "ONLY permitted to educational and resource websites (such as Google, GitHub, Wikipedia, "

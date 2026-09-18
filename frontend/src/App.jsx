@@ -102,6 +102,83 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
+  // Web Audio API beep helper function (~1000Hz, ~0.3 seconds)
+  const playBeep = () => {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      const audioCtx = new AudioCtx();
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(1000, audioCtx.currentTime);
+      gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      oscillator.start();
+      oscillator.stop(audioCtx.currentTime + 0.3);
+    } catch (e) {
+      console.warn("Web Audio API beep error:", e);
+    }
+  };
+
+  // Client-side reminder polling effect (polls /reminders/check every 15s)
+  useEffect(() => {
+    const checkDueReminders = async () => {
+      try {
+        const response = await fetch('/reminders/check');
+        if (!response.ok) return;
+        const data = await response.json();
+        if (data && Array.isArray(data.due) && data.due.length > 0) {
+          const newChatItems = [];
+          data.due.forEach(reminder => {
+            // 1. Play a short beep using Web Audio API
+            playBeep();
+
+            const reminderMessage = `Reminder: ${reminder.task}`;
+            const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            newChatItems.push({
+              sender: 'jarvis',
+              text: reminderMessage,
+              time: timeStr
+            });
+
+            // 3. Speak it aloud using SpeechSynthesisUtterance (browser text-to-speech)
+            if ('speechSynthesis' in window) {
+              try {
+                const utterance = new SpeechSynthesisUtterance(reminderMessage);
+                utterance.rate = 1.0;
+                window.speechSynthesis.speak(utterance);
+              } catch (e) {
+                console.warn("SpeechSynthesis error:", e);
+              }
+            }
+          });
+
+          if (newChatItems.length > 0) {
+            // 2. Add message to chat like "Reminder: {task}"
+            setMessages(prev => [...prev, ...newChatItems]);
+          }
+
+          fetchSystemData();
+        }
+      } catch (err) {
+        console.warn("Error checking due reminders:", err);
+      }
+    };
+
+    checkDueReminders();
+    const interval = setInterval(checkDueReminders, 15000);
+    return () => clearInterval(interval);
+  }, []);
+
   // Web Speech Recognition setup
   const initSpeechRecognition = (lang) => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;

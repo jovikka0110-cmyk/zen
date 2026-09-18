@@ -5,30 +5,6 @@
   "chat_history": [
     {
       "role": "user",
-      "text": "nalla irukiya"
-    },
-    {
-      "role": "model",
-      "text": "நான் நன்றாக இருக்கிறேன்! நீங்கள் எப்படி இருக்கிறீர்கள்? உங்களுக்கு நான் என்ன உதவி செய்ய வேண்டும்?"
-    },
-    {
-      "role": "user",
-      "text": "enakku joke"
-    },
-    {
-      "role": "model",
-      "text": "கண்டிப்பாக! இதோ உங்களுக்காக ஒரு ஜோக்:\n\nஆசிரியர்: \"வகுப்பில் யார் முட்டாள் என்பதை இப்போது நிரூபிக்கப் போகிறேன்... யார் முட்டாளோ, அவர்கள் எந்திரிக்கவும்!\"\n(சில நிமிடங்கள் கழித்து, மாணவன் ஒருவன் மெல்ல எழுந்தான்.)\nஆசிரியர்: \"என்னப்பா, நீதான் முட்டாள்னு ஒப்புக்கொறியா?\"\nமாணவன்: \"இல்லை ஐயா... நீங்கள் மட்டும் தனியாக நிற்பதைப் பார்த்துவிட்டு, உங்களுக்குத் துணையாக இருக்கத்தான் எழுந்தேன்!\"\n\nஇது உங்களுக்குப் பிடித்திருக்கிறதா? வேறு ஏதாவது உதவி தேவையா?"
-    },
-    {
-      "role": "user",
-      "text": "i want you to listen only to my voice"
-    },
-    {
-      "role": "model",
-      "text": "கண்டிப்பாக, இனி நான் உங்கள் குரலை மட்டுமே கவனித்துச் செயல்படுவேன். உங்களுக்கு என்ன உதவி வேண்டும் என்பதைச் சொல்லுங்கள்!"
-    },
-    {
-      "role": "user",
       "text": "respond in tamil: வணக்கம், உங்கள் பெயர் என்ன?"
     },
     {
@@ -202,6 +178,30 @@
     {
       "role": "model",
       "text": "Alright, we are stopping right here! Take all the time you need. \n\nWhenever you are ready to jump back in—whether it's Python, JavaScript, or anything else—just let me know. Have a wonderful day! 🌟"
+    },
+    {
+      "role": "user",
+      "text": "sorry 7:29 pm"
+    },
+    {
+      "role": "model",
+      "text": "No need to apologize at all! Time flies when you are learning and having fun. \n\nWhenever you are ready to continue or if you just want to chat about coding again, I'll be right here. Have a great evening! 🌟"
+    },
+    {
+      "role": "user",
+      "text": "okay now remind to eat at 8:00 pm today"
+    },
+    {
+      "role": "model",
+      "text": "I'm sorry, but I don't have the ability to set alarms, send notifications, or track real-world time to send reminders. \n\nHowever, since it's already getting close to 8:00 PM, you might want to set a reminder or alarm right on your device so you don't forget to eat! Take care, and let me know if you want to do any more coding later! 🍽️✨"
+    },
+    {
+      "role": "user",
+      "text": "remaind me to eat at 19:40 pm"
+    },
+    {
+      "role": "model",
+      "text": "I have successfully set a reminder for you to eat at 19:40 today! When the time arrives, this system will alert you with browser beeps and voice notifications. 🍽️⏰"
     }
   ],
   "tutor_mode": false,
